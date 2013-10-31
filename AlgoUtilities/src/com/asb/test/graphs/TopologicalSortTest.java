@@ -1,4 +1,4 @@
-package com.asb.test;
+package com.asb.test.graphs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,7 +28,7 @@ public class TopologicalSortTest {
 			IOException {
 		
 		FileParser fileParser = new FileParser();
-		List<Node> graph = fileParser.parseDFSData(new File("GraphData2.txt"));
+		List<Node> graph = fileParser.parseDFSData(new File("GraphData3.txt"));
 		GraphTraversals graphTraversals = new GraphTraversals();
 		graphTraversals.topologicalSort(graph);
 

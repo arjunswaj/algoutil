@@ -1,4 +1,4 @@
-package com.asb.test;
+package com.asb.test.graphs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ import com.asb.utils.bean.Node;
  * @author arjun
  * 
  */
-public class BFSTest {
+public class StronglyConnectedComponentsTest {
 
 	/**
 	 * Test BFS
@@ -28,9 +28,9 @@ public class BFSTest {
 			IOException {
 		
 		FileParser fileParser = new FileParser();
-		List<Node> graph = fileParser.parseDFSData(new File("GraphData2.txt"));
+		List<Node> graph = fileParser.parseDFSData(new File("GraphData4.txt"));
 		GraphTraversals graphTraversals = new GraphTraversals();
-		graphTraversals.bfs(graph);
+		graphTraversals.stronglyConnectedComponents(graph);
 
 	}
 
