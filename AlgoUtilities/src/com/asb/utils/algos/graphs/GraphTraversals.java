@@ -1,6 +1,9 @@
 package com.asb.utils.algos.graphs;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+
 import com.asb.utils.bean.Neighbour;
 import com.asb.utils.bean.Node;
 import com.asb.utils.bean.consts.NodeColor;
@@ -44,4 +47,36 @@ public class GraphTraversals {
 		node.setFinishCount(counter);
 	}
 
+	public void bfs(List<Node> graph) {
+		for (Node node : graph) {
+			node.setNodeColor(NodeColor.RED);
+		}
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(graph.get(0));
+		while (!queue.isEmpty()) {
+			Node node = queue.poll();
+			node.setNodeColor(NodeColor.GRAY);
+			counter += 1;
+			node.setVisitCount(counter);
+			List<Neighbour> neighbours = node.getAdjacentNodes();
+			for (Neighbour neighbour : neighbours) {
+				int adjNodeNo = neighbour.getNodeNumber();
+				Node adjNode = graph.get(adjNodeNo);
+				if (NodeColor.RED == adjNode.getNodeColor()) {
+					adjNode.setNodeColor(NodeColor.GRAY);
+					queue.add(adjNode);
+				}
+			}
+			node.setNodeColor(NodeColor.GREEN);
+			counter += 1;
+			node.setFinishCount(counter);
+		}
+		
+		for (Node node : graph) {
+			System.out
+					.println(node.getNodeNumber() + ": ("
+							+ node.getVisitCount() + ", "
+							+ node.getFinishCount() + ")");
+		}
+	}
 }

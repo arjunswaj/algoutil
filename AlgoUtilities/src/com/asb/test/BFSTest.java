@@ -15,10 +15,10 @@ import com.asb.utils.bean.Node;
  * @author arjun
  * 
  */
-public class DFSTest {
+public class BFSTest {
 
 	/**
-	 * Test DFS
+	 * Test BFS
 	 * 
 	 * @param args
 	 * @throws IOException
@@ -30,7 +30,7 @@ public class DFSTest {
 		FileParser fileParser = new FileParser();
 		List<Node> graph = fileParser.parseDFSData(new File("GraphData2.txt"));
 		GraphTraversals graphTraversals = new GraphTraversals();
-		graphTraversals.dfs(graph);
+		graphTraversals.bfs(graph);
 
 	}
 
