@@ -15,7 +15,7 @@ import com.asb.utils.bean.Node;
  * @author arjun
  * 
  */
-public class BFSTest {
+public class TopologicalSortTest {
 
 	/**
 	 * Test BFS
@@ -30,7 +30,7 @@ public class BFSTest {
 		FileParser fileParser = new FileParser();
 		List<Node> graph = fileParser.parseDFSData(new File("GraphData2.txt"));
 		GraphTraversals graphTraversals = new GraphTraversals();
-		graphTraversals.bfs(graph);
+		graphTraversals.topologicalSort(graph);
 
 	}
 

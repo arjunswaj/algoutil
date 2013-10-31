@@ -3,6 +3,7 @@ package com.asb.utils.algos.graphs;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 import com.asb.utils.bean.Neighbour;
 import com.asb.utils.bean.Node;
@@ -12,21 +13,30 @@ public class GraphTraversals {
 
 	private int counter = -1;
 
-	public void dfs(List<Node> graph) {
-		for (Node node : graph) {
-			node.setNodeColor(NodeColor.RED);
-		}
-		for (Node node : graph) {
-			if (NodeColor.RED == node.getNodeColor()) {
-				node.setNodeColor(NodeColor.RED);
-				dfsTraversal(node, graph);
-			}
-		}
+	Stack<Node> stack = new Stack<Node>();
+
+	public void displayGraph(List<Node> graph) {
 		for (Node node : graph) {
 			System.out
 					.println(node.getNodeNumber() + ": ("
 							+ node.getVisitCount() + ", "
 							+ node.getFinishCount() + ")");
+		}
+	}
+
+	private void initGraph(List<Node> graph) {
+		for (Node node : graph) {
+			node.setNodeColor(NodeColor.RED);
+		}
+	}
+
+	public void dfs(List<Node> graph) {
+		initGraph(graph);
+		for (Node node : graph) {
+			if (NodeColor.RED == node.getNodeColor()) {
+				node.setNodeColor(NodeColor.RED);
+				dfsTraversal(node, graph);
+			}
 		}
 	}
 
@@ -42,15 +52,14 @@ public class GraphTraversals {
 				dfsTraversal(adjNode, graph);
 			}
 		}
+		stack.add(node);
 		node.setNodeColor(NodeColor.GREEN);
 		counter += 1;
 		node.setFinishCount(counter);
 	}
 
 	public void bfs(List<Node> graph) {
-		for (Node node : graph) {
-			node.setNodeColor(NodeColor.RED);
-		}
+		initGraph(graph);
 		Queue<Node> queue = new LinkedList<Node>();
 		queue.add(graph.get(0));
 		while (!queue.isEmpty()) {
@@ -71,8 +80,14 @@ public class GraphTraversals {
 			counter += 1;
 			node.setFinishCount(counter);
 		}
-		
-		for (Node node : graph) {
+	}
+
+	public void topologicalSort(List<Node> graph) {
+		dfs(graph);
+		Node node = null;
+		System.out.println("Topological Ordering");
+		while (!stack.isEmpty()) {
+			node = stack.pop();
 			System.out
 					.println(node.getNodeNumber() + ": ("
 							+ node.getVisitCount() + ", "

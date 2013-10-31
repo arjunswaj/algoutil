@@ -39,7 +39,7 @@ public class FileParser {
 					adjNodeNo += 1;
 				}
 				nodes.add(mainNode);
-				System.out.println(mainNode);
+				//System.out.println(mainNode);
 				index += 1;
 			}
 
