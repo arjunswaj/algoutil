@@ -38,7 +38,7 @@ int gimme_max_money(int coins[SIZE], int i, int j) {
 		my_next_choice_1 = gimme_max_money(coins, i, j-2);
 		//He'll choose i
 		my_next_choice_2 = gimme_max_money(coins, i+1, j-1);
-		my_choice_2 = coins[i] + min(my_next_choice_1, my_next_choice_2);
+		my_choice_2 = coins[j] + min(my_next_choice_1, my_next_choice_2);
 
 		return max(my_choice_1, my_choice_2);
 	}
