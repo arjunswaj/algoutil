@@ -9,7 +9,7 @@ create_node()
 	return node;
 }
 
-int 
+int
 free_list(struct linked_list *head)
 {
 	struct linked_list *node;
@@ -90,7 +90,7 @@ remove_node(struct linked_list *head, struct linked_list *node)
 	return temp;
 }
 
-int 
+int
 display_list(struct linked_list *head)
 {
 	struct linked_list *node = head;
@@ -116,14 +116,16 @@ reverse_list(struct linked_list *head)
 	return temp2;
 }
 
-struct linked_list * create_list_from_number(long number) {	
-	int last_digit = 0;
+struct linked_list *
+create_list_from_number(long number)
+{
+	int		last_digit = 0;
 	struct linked_list *number_node = NULL;
 	while (number != 0) {
 		last_digit = number % 10;
 		number /= 10;
 		number_node = add_to_list(number_node, last_digit);
-	}	
+	}
 	return number_node;
 }
 
@@ -172,3 +174,63 @@ add_numbers(struct linked_list *number1, struct linked_list *number2)
 	return result;
 }
 
+struct linked_list *
+pop(struct linked_list **head_address)
+{
+	struct linked_list *head = *head_address;
+	struct linked_list *temp = head;
+	*head_address = head->next;
+	temp->next = NULL;
+	return temp;
+}
+
+struct linked_list *
+peek(struct linked_list **head_address)
+{
+	struct linked_list *head = *head_address;
+	struct linked_list *temp = head;
+	return temp;
+}
+
+int 
+push(struct linked_list **head_address, struct linked_list *data)
+{
+	struct linked_list *head = *head_address;
+	data->next = head;
+	*head_address = data;
+	return 0;
+}
+
+int 
+push_data(struct linked_list **head_address, int data)
+{
+	struct linked_list *head = *head_address;
+	struct linked_list *temp = create_node();
+	temp->data = data;
+	temp->next = head;
+	*head_address = temp;
+	return 0;
+}
+
+struct linked_list *
+sort_stack(struct linked_list **stack_address)
+{
+	struct linked_list *stack = *stack_address;
+	struct linked_list *sorted_stack = NULL;
+	struct linked_list *data_item = NULL;
+	struct linked_list *sorted_data_item = NULL;
+
+	while (NULL != stack) {
+		data_item = pop(&stack);
+		//printf("Popped %d from stack\n", data_item->data);
+		while ((NULL != sorted_stack)
+		       && (NULL != (sorted_data_item = peek(&sorted_stack)))
+		       && (sorted_data_item->data < data_item->data)) {
+			//printf("Pushed %d into stack\n", sorted_stack->data);
+			push(&stack, pop(&sorted_stack));
+		}
+		push(&sorted_stack, data_item);
+	}
+
+	return sorted_stack;
+}
