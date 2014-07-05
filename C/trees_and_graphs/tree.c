@@ -2,90 +2,93 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int min(int a, int b) {
+int 
+min(int a, int b)
+{
 	return a > b ? b : a;
 }
 
-int max(int a, int b) {
+int 
+max(int a, int b)
+{
 	return a > b ? a : b;
 }
 
-int abs (int a) {
+int 
+abs(int a)
+{
 	return a > 0 ? a : (-1 * a);
 }
 
-struct tree *
+struct tree    *
 create_node()
-{	
-	struct tree *node = (struct tree *)malloc(sizeof(struct tree));
+{
+	struct tree    *node = (struct tree *)malloc(sizeof(struct tree));
 	return node;
 }
 
-struct list *
+struct list    *
 create_list_node()
 {
-	struct list *node = (struct list *)malloc(sizeof(struct list));
+	struct list    *node = (struct list *)malloc(sizeof(struct list));
 
 	return node;
 }
 
-struct tree * 
-init_node(int data, struct tree *left, struct tree *right) {
-	struct tree *node = create_node();
+struct tree    *
+init_node(int data, struct tree *left, struct tree *right)
+{
+	struct tree    *node = create_node();
 	node->data = data;
 	node->left = left;
 	node->right = right;
 	return node;
 }
 
-int height(struct tree *root){
-	if (NULL == root)
-	{
+int 
+height(struct tree *root)
+{
+	if (NULL == root) {
 		return 0;
 	}
 	return max(height(root->left), height(root->right)) + 1;
 }
 
-int check_balanced(struct tree *root) {
-	int left_tree_height = 0;
-	int right_tree_height = 0;
-	if (NULL == root)
-	{
+int 
+check_balanced(struct tree *root)
+{
+	int		left_tree_height = 0;
+	int		right_tree_height = 0;
+	if (NULL == root) {
 		return 0;
 	}
-
 	left_tree_height = height(root->left);
 	right_tree_height = height(root->right);
 
-	if (abs(left_tree_height - right_tree_height) > 1)
-	{
+	if (abs(left_tree_height - right_tree_height) > 1) {
 		return -1;
 	} else {
 		return 0;
 	}
 }
 
-int check_balanced_optimized(struct tree *root) {
-	int left_tree_height = 0;
-	int right_tree_height = 0;
-	if (NULL == root)
-	{
+int 
+check_balanced_optimized(struct tree *root)
+{
+	int		left_tree_height = 0;
+	int		right_tree_height = 0;
+	if (NULL == root) {
 		return 0;
 	}
 	left_tree_height = check_balanced_optimized(root->left);
-	if (-1 == left_tree_height)
-	{
+	if (-1 == left_tree_height) {
 		return left_tree_height;
 	}
-
 	right_tree_height = check_balanced_optimized(root->right);
-	if (-1 == right_tree_height)
-	{
+	if (-1 == right_tree_height) {
 		return right_tree_height;
 	}
-
-	if (abs(left_tree_height - right_tree_height) > 1)
-	{
+	if (abs(left_tree_height - right_tree_height) > 1) {
 		return max(left_tree_height, right_tree_height) + 1;
 	} else {
 		return -1;
@@ -95,7 +98,7 @@ int check_balanced_optimized(struct tree *root) {
 int
 display_list(struct list *head)
 {
-	struct list *node = head;
+	struct list    *node = head;
 	while (NULL != node) {
 		printf("%d ", node->data->data);
 		node = node->next;
@@ -105,40 +108,41 @@ display_list(struct list *head)
 }
 
 
-int enqueue_list(struct list **head_address, struct list **tail_address, struct tree *data){	
-	struct list *head = *head_address;
-	struct list *tail = *tail_address;
-	struct list *temp = create_list_node();
-	temp->data = data;	
-	
-	if (NULL == head && NULL == tail)
-	{				
+int 
+enqueue_list(struct list **head_address, struct list **tail_address, struct tree *data)
+{
+	struct list    *head = *head_address;
+	struct list    *tail = *tail_address;
+	struct list    *temp = create_list_node();
+	temp->data = data;
+
+	if (NULL == head && NULL == tail) {
 		//printf("Head and tail are null\n");
-		*head_address = temp;		
+		*head_address = temp;
 		*tail_address = temp;
-	} else {	
-		tail->next = temp;								
+	} else {
+		tail->next = temp;
 		*tail_address = temp;
 		//printf("Head and tail are not null\n");
-	}	
+	}
 	return 0;
 }
 
-struct list *dequeue_list(struct list **head_address, struct list **tail_address) {
-	struct list *head = *head_address;
-	struct list *tail = *tail_address;	
-	struct list *temp = head;			
-	if (NULL != head)
-	{		
-		if (head == tail)
-		{				
+struct list    *
+dequeue_list(struct list **head_address, struct list **tail_address)
+{
+	struct list    *head = *head_address;
+	struct list    *tail = *tail_address;
+	struct list    *temp = head;
+	if (NULL != head) {
+		if (head == tail) {
 			//printf("Head and tail are same\n");
 			*tail_address = NULL;
 			*head_address = NULL;
 		} else {
 			*head_address = head->next;
-		}	
-		temp->next = NULL;	
+		}
+		temp->next = NULL;
 		return temp;
 
 	} else {
@@ -146,25 +150,23 @@ struct list *dequeue_list(struct list **head_address, struct list **tail_address
 	}
 }
 
-int add_node_to_bst(struct tree **root_address, struct tree *node) {
-	struct tree *root = *root_address;
-	if (NULL == root)
-	{
+int 
+add_node_to_bst(struct tree **root_address, struct tree *node)
+{
+	struct tree    *root = *root_address;
+	if (NULL == root) {
 		*root_address = node;
 		return 0;
 	}
-	if (root->data >= node->data)
-	{
-		if (NULL == root->left)
-		{
-			root->left = node;			
+	if (root->data >= node->data) {
+		if (NULL == root->left) {
+			root->left = node;
 		} else {
 			add_node_to_bst(&(root->left), node);
 		}
 	} else {
-		if (NULL == root->right)
-		{
-			root->right = node;			
+		if (NULL == root->right) {
+			root->right = node;
 		} else {
 			add_node_to_bst(&(root->right), node);
 		}
@@ -172,9 +174,10 @@ int add_node_to_bst(struct tree **root_address, struct tree *node) {
 	return 0;
 }
 
-void inorder(struct tree *root) {
-	if (NULL == root)
-	{
+void 
+inorder(struct tree *root)
+{
+	if (NULL == root) {
 		return;
 	}
 	inorder(root->left);
@@ -182,3 +185,13 @@ void inorder(struct tree *root) {
 	inorder(root->right);
 }
 
+void 
+free_tree(struct tree *root)
+{
+	if (NULL == root) {
+		return;
+	}
+	free_tree(root->left);
+	free_tree(root->right);
+	free(root);
+}
