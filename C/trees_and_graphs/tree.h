@@ -26,3 +26,5 @@ int		add_node_to_bst(struct tree **root_address, struct tree *node);
 void		inorder   (struct tree *root);
 
 void		free_tree (struct tree *root);
+
+struct tree    *make_bst_from_array(int array[], int low, int high);

@@ -2,19 +2,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int 
+int
 min(int a, int b)
 {
 	return a > b ? b : a;
 }
 
-int 
+int
 max(int a, int b)
 {
 	return a > b ? a : b;
 }
 
-int 
+int
 abs(int a)
 {
 	return a > 0 ? a : (-1 * a);
@@ -45,7 +45,7 @@ init_node(int data, struct tree *left, struct tree *right)
 	return node;
 }
 
-int 
+int
 height(struct tree *root)
 {
 	if (NULL == root) {
@@ -54,7 +54,7 @@ height(struct tree *root)
 	return max(height(root->left), height(root->right)) + 1;
 }
 
-int 
+int
 check_balanced(struct tree *root)
 {
 	int		left_tree_height = 0;
@@ -72,7 +72,7 @@ check_balanced(struct tree *root)
 	}
 }
 
-int 
+int
 check_balanced_optimized(struct tree *root)
 {
 	int		left_tree_height = 0;
@@ -108,7 +108,7 @@ display_list(struct list *head)
 }
 
 
-int 
+int
 enqueue_list(struct list **head_address, struct list **tail_address, struct tree *data)
 {
 	struct list    *head = *head_address;
@@ -150,7 +150,7 @@ dequeue_list(struct list **head_address, struct list **tail_address)
 	}
 }
 
-int 
+int
 add_node_to_bst(struct tree **root_address, struct tree *node)
 {
 	struct tree    *root = *root_address;
@@ -174,7 +174,7 @@ add_node_to_bst(struct tree **root_address, struct tree *node)
 	return 0;
 }
 
-void 
+void
 inorder(struct tree *root)
 {
 	if (NULL == root) {
@@ -185,7 +185,7 @@ inorder(struct tree *root)
 	inorder(root->right);
 }
 
-void 
+void
 free_tree(struct tree *root)
 {
 	if (NULL == root) {
@@ -194,4 +194,19 @@ free_tree(struct tree *root)
 	free_tree(root->left);
 	free_tree(root->right);
 	free(root);
+}
+
+
+struct tree    *
+make_bst_from_array(int array[], int low, int high)
+{
+	int		mid = (low + high) / 2;
+	struct tree    *node;
+	if (low > high) {
+		return NULL;
+	}
+	node = init_node(array[mid], NULL, NULL);
+	node->left = make_bst_from_array(array, low, mid - 1);
+	node->right = make_bst_from_array(array, mid + 1, high);
+	return node;
 }
