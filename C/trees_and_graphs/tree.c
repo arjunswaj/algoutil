@@ -211,7 +211,7 @@ make_bst_from_array(int array[], int low, int high)
 	return node;
 }
 
-int 
+int
 find_node(struct tree *root, struct tree *node)
 {
 	int		find_status = NOT_FOUND;
@@ -251,13 +251,13 @@ lca(struct tree *root, struct tree *node_1, struct tree *node_2)
 	if (node_1_left != node_2_left) {
 		//Found on different sides, so, root is the LCA
 			return root;
-	} else {
+	} else if (node_1_left == node_2_left) {
 		//Found on the same side, so, explore the sub tree
-			if (node_1_left == node_2_left) {
+			if (node_1_left == FOUND) {
 			//Found in the left sub tree
 				lca_node = lca(root->left, node_1, node_2);
-		} else if (node_1_left == node_2_left) {
-			//Found in the right sub tree
+		} else if (node_1_left == NOT_FOUND) {
+			//Not found in left sub tree, so, should be in the right sub tree
 				lca_node = lca(root->right, node_1, node_2);
 		}
 	}
