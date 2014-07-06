@@ -35,3 +35,5 @@ struct tree    *make_bst_from_array(int array[], int low, int high);
 int		find_node  (struct tree *root, struct tree *node);
 
 struct tree    *lca(struct tree *root, struct tree *node_1, struct tree *node_2);
+
+int		path_to_key(struct tree *root, int key);

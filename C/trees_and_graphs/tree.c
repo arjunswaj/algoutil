@@ -136,13 +136,13 @@ dequeue_list(struct list **head_address, struct list **tail_address)
 	struct list    *temp = head;
 	if (NULL != head) {
 		if (head == tail) {
-			//printf("Head and tail are same\n");
+			printf("Head and tail are same\n");
 			*tail_address = NULL;
 			*head_address = NULL;
 		} else {
 			*head_address = head->next;
 		}
-		temp->next = NULL;
+		//temp->next = NULL;
 		return temp;
 
 	} else {
@@ -262,4 +262,29 @@ lca(struct tree *root, struct tree *node_1, struct tree *node_2)
 		}
 	}
 	return lca_node;
+}
+
+int 
+path_to_key(struct tree *root, int key)
+{
+	int		found_status_left;
+	int		found_status_right;
+	if (NULL == root) {
+		return NOT_FOUND;
+	}
+	if (key == root->data) {
+		printf("%d <-- ", root->data);
+		return FOUND;
+	}
+	found_status_left = path_to_key(root->left, key);
+	if (FOUND == found_status_left) {
+		printf("%d <-- ", root->data);
+		return FOUND;
+	}
+	found_status_right = path_to_key(root->right, key);
+	if (FOUND == found_status_right) {
+		printf("%d <-- ", root->data);
+		return FOUND;
+	}
+	return NOT_FOUND;
 }
