@@ -1,3 +1,6 @@
+#define FOUND 0
+#define NOT_FOUND -1
+
 struct tree {
 	int		data;
 	struct tree    *left;
@@ -28,3 +31,7 @@ void		inorder   (struct tree *root);
 void		free_tree (struct tree *root);
 
 struct tree    *make_bst_from_array(int array[], int low, int high);
+
+int		find_node  (struct tree *root, struct tree *node);
+
+struct tree    *lca(struct tree *root, struct tree *node_1, struct tree *node_2);

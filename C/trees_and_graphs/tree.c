@@ -210,3 +210,56 @@ make_bst_from_array(int array[], int low, int high)
 	node->right = make_bst_from_array(array, mid + 1, high);
 	return node;
 }
+
+int 
+find_node(struct tree *root, struct tree *node)
+{
+	int		find_status = NOT_FOUND;
+	if (NULL == root) {
+		return NOT_FOUND;
+	}
+	if (root == node) {
+		return FOUND;
+	}
+	if (FOUND == find_node(root->left, node)) {
+		return FOUND;
+	}
+	if (FOUND == find_node(root->right, node)) {
+		return FOUND;
+	}
+	return NOT_FOUND;
+}
+
+struct tree    *
+lca(struct tree *root, struct tree *node_1, struct tree *node_2)
+{
+	struct tree    *lca_node;
+	int		node_1_left;
+	int		node_2_left;
+	int		node_1_right;
+	int		node_2_right;
+
+	if (NULL == root) {
+		return NULL;
+	}
+	if (node_1 == root || node_2 == root) {
+		return root;
+	}
+	node_1_left = find_node(root->left, node_1);
+	node_2_left = find_node(root->left, node_2);
+
+	if (node_1_left != node_2_left) {
+		//Found on different sides, so, root is the LCA
+			return root;
+	} else {
+		//Found on the same side, so, explore the sub tree
+			if (node_1_left == node_2_left) {
+			//Found in the left sub tree
+				lca_node = lca(root->left, node_1, node_2);
+		} else if (node_1_left == node_2_left) {
+			//Found in the right sub tree
+				lca_node = lca(root->right, node_1, node_2);
+		}
+	}
+	return lca_node;
+}
