@@ -16,6 +16,8 @@
 	gcc -o 4_tree_to_dll 4_tree_to_dll.o ./tree.o
 4_reverse_nodes: ./tree.o ./4_reverse_nodes.o
 	gcc -o 4_reverse_nodes 4_reverse_nodes.o ./tree.o
+4_reverse_nodes_alternate_level: ./tree.o ./4_reverse_nodes_alternate_level.o
+	gcc -o 4_reverse_nodes_alternate_level 4_reverse_nodes_alternate_level.o ./tree.o
 
 4_1_1_check_balanced.o: ./4_1_1_check_balanced.c
 	gcc -g -c ./4_1_1_check_balanced.c -o 4_1_1_check_balanced.o
@@ -35,8 +37,11 @@
 	gcc -g -c ./4_tree_to_dll.c -o 4_tree_to_dll.o
 4_reverse_nodes.o: ./4_reverse_nodes.c
 	gcc -g -c ./4_reverse_nodes.c -o 4_reverse_nodes.o
-	
+4_reverse_nodes_alternate_level.o: ./4_reverse_nodes_alternate_level.c
+	gcc -g -c ./4_reverse_nodes_alternate_level.c -o 4_reverse_nodes_alternate_level.o
+
+
 tree.o:./tree.c
 	gcc -g -c ./tree.c -o ./tree.o
 clean:
-	rm *.o 4_1_1_check_balanced 4_1_2_check_balanced 4_2_find_path 4_bst 4_3_minimal_bst 4_7_lca 4_root_to_key
+	rm *.o *.BAK 4_1_1_check_balanced 4_1_2_check_balanced 4_2_find_path 4_bst 4_3_minimal_bst 4_7_lca 4_root_to_key 4_tree_to_dll 4_reverse_nodes 4_reverse_nodes_alternate_level

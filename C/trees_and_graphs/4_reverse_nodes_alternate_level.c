@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 void
-reverse_nodes_of_a_tree()
+reverse_nodes_of_a_tree_in_alternate_levels()
 {
 	int		index = 0;
 	struct tree    *root;
@@ -13,7 +13,7 @@ reverse_nodes_of_a_tree()
 		add_node_to_bst(&root, node);
 	}
 
-	reverse_nodes(&root);
+	reverse_nodes_alternate_level(&root, 0);
 	inorder(root);
 	free_tree(root);
 	printf("\n");
@@ -22,6 +22,6 @@ reverse_nodes_of_a_tree()
 int
 main(int argc, char const *argv[])
 {
-	reverse_nodes_of_a_tree();
+	reverse_nodes_of_a_tree_in_alternate_levels();
 	return 0;
 }

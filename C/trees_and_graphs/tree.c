@@ -350,12 +350,12 @@ tree_to_doubly_linked_list(struct tree **root_address)
 	printf("\n");
 }
 
-void		
-reverse_nodes(struct tree **root_address) {
-	struct tree    *root = *root_address;	
+void
+reverse_nodes(struct tree **root_address)
+{
+	struct tree    *root = *root_address;
 	struct tree    *temp_node;
-	if (NULL == root)
-	{
+	if (NULL == root) {
 		return;
 	}
 	reverse_nodes(&root->left);
@@ -367,4 +367,20 @@ reverse_nodes(struct tree **root_address) {
 
 }
 
+void
+reverse_nodes_alternate_level(struct tree **root_address, int level)
+{
+	struct tree    *root = *root_address;
+	struct tree    *temp_node;
+	if (NULL == root) {
+		return;
+	}
+	reverse_nodes_alternate_level(&root->left, level + 1);
+	reverse_nodes_alternate_level(&root->right, level + 1);
 
+	if (0 == (level % 2)) {
+		temp_node = root->left;
+		root->left = root->right;
+		root->right = temp_node;
+	}
+}

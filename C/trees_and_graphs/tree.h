@@ -4,6 +4,7 @@
 #define LEFT_CHILD -2
 #define RIGHT_CHILD -3
 
+
 struct tree {
 	int		data;
 	struct tree    *left;
@@ -45,4 +46,4 @@ void		tree_to_doubly_linked_list(struct tree **root_address);
 
 void		reverse_nodes(struct tree **root_address);
 
-
+void		reverse_nodes_alternate_level(struct tree **root_address, int level);
