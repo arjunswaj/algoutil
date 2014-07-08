@@ -1,6 +1,9 @@
 #define FOUND 0
 #define NOT_FOUND -1
 
+#define LEFT_CHILD -2
+#define RIGHT_CHILD -3
+
 struct tree {
 	int		data;
 	struct tree    *left;
@@ -37,3 +40,5 @@ int		find_node  (struct tree *root, struct tree *node);
 struct tree    *lca(struct tree *root, struct tree *node_1, struct tree *node_2);
 
 int		path_to_key(struct tree *root, int key);
+
+void		tree_to_doubly_linked_list(struct tree **root_address);

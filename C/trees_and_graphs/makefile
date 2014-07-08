@@ -12,6 +12,8 @@
 	gcc -o 4_7_lca 4_7_lca.o ./tree.o
 4_root_to_key: ./tree.o ./4_root_to_key.o
 	gcc -o 4_root_to_key 4_root_to_key.o ./tree.o
+4_tree_to_dll: ./tree.o ./4_tree_to_dll.o
+	gcc -o 4_tree_to_dll 4_tree_to_dll.o ./tree.o
 
 4_1_1_check_balanced.o: ./4_1_1_check_balanced.c
 	gcc -g -c ./4_1_1_check_balanced.c -o 4_1_1_check_balanced.o
@@ -27,7 +29,9 @@
 	gcc -g -c ./4_7_lca.c -o 4_7_lca.o
 4_root_to_key.o: ./4_root_to_key.c
 	gcc -g -c ./4_root_to_key.c -o 4_root_to_key.o
-
+4_tree_to_dll.o: ./4_tree_to_dll.c
+	gcc -g -c ./4_tree_to_dll.c -o 4_tree_to_dll.o
+	
 tree.o:./tree.c
 	gcc -g -c ./tree.c -o ./tree.o
 clean:

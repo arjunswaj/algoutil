@@ -264,7 +264,7 @@ lca(struct tree *root, struct tree *node_1, struct tree *node_2)
 	return lca_node;
 }
 
-int 
+int
 path_to_key(struct tree *root, int key)
 {
 	int		found_status_left;
@@ -287,4 +287,65 @@ path_to_key(struct tree *root, int key)
 		return FOUND;
 	}
 	return NOT_FOUND;
+}
+
+void
+tree_flattner(struct tree **child_address,
+	      struct tree **parent_address,
+	      int child_type)
+{
+	if (NULL == *parent_address) {
+		return;
+	}
+	struct tree    *temp = NULL;
+	struct tree    *child = *child_address;
+	struct tree    *parent = *parent_address;
+
+	tree_flattner(&child->left, &child, LEFT_CHILD);
+	tree_flattner(&child->right, &child, RIGHT_CHILD);
+
+	temp = child;
+	if (child_type == LEFT_CHILD) {
+		if (NULL != temp) {
+			while (NULL != temp->right) {
+				temp = temp->right;
+			}
+			parent->left = temp;
+			temp->right = parent;
+		}
+	} else if (child_type == RIGHT_CHILD) {
+		if (NULL != temp) {
+			while (NULL != temp->left) {
+				temp = temp->left;
+			}
+			parent->right = temp;
+			temp->left = parent;
+		}
+	}
+}
+
+void
+tree_to_doubly_linked_list(struct tree **root_address)
+{
+	struct tree    *root = *root_address;
+	struct tree    *node;
+	if (NULL == root) {
+		return;
+	}
+	if (NULL != root->left) {
+		tree_flattner(&root->left, &root, LEFT_CHILD);
+	}
+	if (NULL != root->right) {
+		tree_flattner(&root->right, &root, RIGHT_CHILD);
+	}
+	while (NULL != root->left) {
+		root = root->left;
+	}
+	while (NULL != root) {
+		printf("%d ", root->data);
+		node = root;
+		root = root->right;
+		free(node);
+	}
+	printf("\n");
 }
