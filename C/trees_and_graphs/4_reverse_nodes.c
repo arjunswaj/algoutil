@@ -1,9 +1,9 @@
 #include "tree.h"
 #include <stdlib.h>
-
+#include <stdio.h>
 
 void
-create_dll_from_tree()
+reverse_nodes_of_a_tree()
 {
 	int		index = 0;
 	struct tree    *root;
@@ -13,12 +13,14 @@ create_dll_from_tree()
 		add_node_to_bst(&root, node);
 	}
 
-	tree_to_doubly_linked_list(&root);	
+	reverse_nodes(&root);	
+	inorder(root);
+	free_tree(root);
+	printf("\n");
 }
 
-int 
-main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
-	create_dll_from_tree();
+	reverse_nodes_of_a_tree();
 	return 0;
 }
