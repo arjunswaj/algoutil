@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int access_count = 0;
 int
 min(int a, int b)
 {
@@ -297,6 +298,7 @@ tree_flattner(struct tree **child_address,
 	if (NULL == *parent_address) {
 		return;
 	}
+	access_count += 1;
 	struct tree    *temp = NULL;
 	struct tree    *child = *child_address;
 	struct tree    *parent = *parent_address;
@@ -309,6 +311,7 @@ tree_flattner(struct tree **child_address,
 		if (NULL != temp) {
 			while (NULL != temp->right) {
 				temp = temp->right;
+				access_count += 1;
 			}
 			parent->left = temp;
 			temp->right = parent;
@@ -317,6 +320,7 @@ tree_flattner(struct tree **child_address,
 		if (NULL != temp) {
 			while (NULL != temp->left) {
 				temp = temp->left;
+				access_count += 1;
 			}
 			parent->right = temp;
 			temp->left = parent;
@@ -339,6 +343,7 @@ tree_to_doubly_linked_list(struct tree **root_address)
 		tree_flattner(&root->right, &root, RIGHT_CHILD);
 	}
 	while (NULL != root->left) {
+		access_count += 1;
 		root = root->left;
 	}
 	while (NULL != root) {
@@ -347,7 +352,7 @@ tree_to_doubly_linked_list(struct tree **root_address)
 		root = root->right;
 		free(node);
 	}
-	printf("\n");
+	printf("Access Count: %d\n", access_count);
 }
 
 void
