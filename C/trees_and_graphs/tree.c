@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int access_count = 0;
+int		access_count = 0;
 int
 min(int a, int b)
 {
@@ -391,32 +391,14 @@ reverse_nodes_alternate_level(struct tree **root_address, int level)
 }
 
 void
-sum_of_nodes(struct tree **root_address)
-{
-	struct tree    *root = *root_address;
-	struct tree    *temp_node;
-	if (NULL == root) {
-		return;
-	}
-	reverse_nodes(&root->left);
-	reverse_nodes(&root->right);
-
-	temp_node = root->left;
-	root->left = root->right;
-	root->right = temp_node;
-
-}
-
-void
 iterative_inorder(struct tree *root)
 {
 	struct list    *stack = NULL;
-	struct list    *list_node = NULL;	
-	
-	while ((NULL != stack) || (NULL != root))
-	{
-		// Add to stack
-		while (NULL != root) {
+	struct list    *list_node = NULL;
+
+	while ((NULL != stack) || (NULL != root)) {
+		//Add to stack
+			while (NULL != root) {
 			list_node = create_list_node();
 			list_node->data = root;
 			list_node->next = stack;
@@ -424,8 +406,8 @@ iterative_inorder(struct tree *root)
 			root = root->left;
 		}
 
-		// Pop from stack
-		list_node = stack;
+		//Pop from stack
+			list_node = stack;
 		stack = stack->next;
 
 		printf("%d ", list_node->data->data);
@@ -437,3 +419,109 @@ iterative_inorder(struct tree *root)
 	printf("\n");
 }
 
+struct tree    *lroot;
+struct tree    *rroot;
+
+struct list    *lstack;
+struct list    *lnode;
+
+struct list    *rstack;
+struct list    *rnode;
+
+void
+add_left_nodes_to_stack()
+{
+	struct list    *list_node;
+	while (NULL != lroot) {
+		list_node = create_list_node();
+		list_node->data = lroot;
+		list_node->next = lstack;
+		lstack = list_node;
+		lroot = lroot->left;
+	}
+
+}
+
+int
+find_inorder_successor_left()
+{
+	int		leftno = 0;
+	add_left_nodes_to_stack();
+	lnode = lstack;
+	lstack = lstack->next;
+	//printf("L: %d ", lnode->data->data);
+	leftno = lnode->data->data;
+	lroot = lnode->data->right;
+	free(lnode);
+	return leftno;
+}
+
+void
+add_right_nodes_to_stack()
+{
+	struct list    *list_node;
+	while (NULL != rroot) {
+		list_node = create_list_node();
+		list_node->data = rroot;
+		list_node->next = rstack;
+		rstack = list_node;
+		rroot = rroot->right;
+	}
+
+}
+
+int
+find_inorder_successor_right()
+{
+	int		rightno = 0;
+	add_right_nodes_to_stack();
+	rnode = rstack;
+	rstack = rstack->next;
+	//printf("R: %d", rnode->data->data);
+	rightno = rnode->data->data;
+	rroot = rnode->data->left;
+	free(rnode);
+	return rightno;
+}
+
+void
+free_memory_of_stack()
+{
+	while (NULL != lroot || NULL != lstack) {
+		find_inorder_successor_left();
+	}
+	while (NULL != rroot || NULL != rstack) {
+		find_inorder_successor_right();
+	}
+}
+
+void
+sum_of_nodes(struct tree *root, int sum)
+{
+	lroot = root;
+	rroot = root;
+
+	int		leftno = 0;
+	int		rightno = 0;
+
+	if (NULL == root) {
+		return;
+	}
+	leftno = find_inorder_successor_left();
+	rightno = find_inorder_successor_right();
+
+	while ((NULL != lroot || NULL != lstack)
+	       && (NULL != rroot || NULL != rstack)) {
+
+		if (leftno + rightno < sum) {
+			leftno = find_inorder_successor_left();
+		} else if (leftno + rightno > sum) {
+			rightno = find_inorder_successor_right();
+		} else {
+			printf("Match!\n");
+			free_memory_of_stack();
+		}
+		printf("The numbers are %d and %d\n", leftno, rightno);
+	}
+	printf("\n");
+}

@@ -48,6 +48,6 @@ void		reverse_nodes(struct tree **root_address);
 
 void		reverse_nodes_alternate_level(struct tree **root_address, int level);
 
-void		sum_of_nodes(struct tree **root_address);
+void		iterative_inorder(struct tree *root);
 
-void		iterative_inorder   (struct tree *root);
+void		sum_of_nodes(struct tree *root_address, int sum);
