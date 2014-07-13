@@ -32,7 +32,7 @@ struct list    *
 create_list_node()
 {
 	struct list    *node = (struct list *)malloc(sizeof(struct list));
-
+	node->next = NULL;
 	return node;
 }
 
@@ -389,3 +389,51 @@ reverse_nodes_alternate_level(struct tree **root_address, int level)
 		root->right = temp_node;
 	}
 }
+
+void
+sum_of_nodes(struct tree **root_address)
+{
+	struct tree    *root = *root_address;
+	struct tree    *temp_node;
+	if (NULL == root) {
+		return;
+	}
+	reverse_nodes(&root->left);
+	reverse_nodes(&root->right);
+
+	temp_node = root->left;
+	root->left = root->right;
+	root->right = temp_node;
+
+}
+
+void
+iterative_inorder(struct tree *root)
+{
+	struct list    *stack = NULL;
+	struct list    *list_node = NULL;	
+	
+	while ((NULL != stack) || (NULL != root))
+	{
+		// Add to stack
+		while (NULL != root) {
+			list_node = create_list_node();
+			list_node->data = root;
+			list_node->next = stack;
+			stack = list_node;
+			root = root->left;
+		}
+
+		// Pop from stack
+		list_node = stack;
+		stack = stack->next;
+
+		printf("%d ", list_node->data->data);
+
+		root = list_node->data->right;
+
+		free(list_node);
+	}
+	printf("\n");
+}
+
