@@ -117,6 +117,22 @@ reverse_list(struct linked_list *head)
 }
 
 struct linked_list *
+reverse_list_recursion(struct linked_list **head_address)
+{
+	struct linked_list *head = *head_address;
+	struct linked_list *next_node = head->next;
+	struct linked_list *temp;
+	if (NULL == next_node)
+	{
+		return head;
+	}
+	temp = reverse_list_recursion(&next_node);
+	next_node->next = head;
+	head->next = NULL;
+	return temp;
+}
+
+struct linked_list *
 create_list_from_number(long number)
 {
 	int		last_digit = 0;

@@ -17,6 +17,9 @@ main(int argc, char const *argv[])
 	display_list(head);
 	head = reverse_list(head);
 	display_list(head);
+	printf("Reverse by recursion\n");
+	head = reverse_list_recursion(&head);
+	display_list(head);
 	head = remove_from_list(head, 4);
 	display_list(head);
 	head = remove_from_list(head, 2);

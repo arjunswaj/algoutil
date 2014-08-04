@@ -15,6 +15,8 @@ int		display_list(struct linked_list *head);
 
 struct linked_list *reverse_list(struct linked_list *head);
 
+struct linked_list *reverse_list_recursion(struct linked_list **head);
+
 int		free_list  (struct linked_list *head);
 
 struct linked_list *create_list_from_number(long number);
