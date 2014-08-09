@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define LENGTH 18
+#define LENGTH 8
 #define SIZES 4
 #define NOT_POSSIBLE -1
 
@@ -63,7 +63,7 @@ void display_mem(int mem[SIZES][LENGTH]) {
 
 int main(int argc, char const *argv[])
 {
-	int arr[] = {2, 3, 5};
+	int arr[] = {2, 5, 5};
 	int max = 0;	
 	int mem[SIZES][LENGTH];
 	init_mem(mem);
